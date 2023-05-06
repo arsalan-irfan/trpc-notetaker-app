@@ -1,4 +1,4 @@
-import { signIn, useSession } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import React from "react";
 
 const Header = () => {
@@ -11,14 +11,24 @@ const Header = () => {
       <div className="flex-none gap-2">
         <div>
           {sessionData?.user ? (
-            <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
-              <div className="w-10 rounded-full">
-                <img
-                  src={sessionData.user?.image ?? ""}
-                  alt={sessionData.user?.name ?? ""}
-                />
-              </div>
-            </label>
+            <div className="dropdown-end dropdown">
+              <label tabIndex={0} className="btn-ghost btn-circle avatar btn">
+                <div className="w-10 rounded-full">
+                  <img
+                    src={sessionData.user?.image ?? ""}
+                    alt={sessionData.user?.name ?? ""}
+                  />
+                </div>
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu rounded-box menu-compact mt-3 w-52 bg-base-100 p-2 shadow"
+              >
+                <li onClick={() => void signOut()}>
+                  <a className="text-black">Logout</a>
+                </li>
+              </ul>
+            </div>
           ) : (
             <button
               className="btn-ghost rounded-btn btn"
